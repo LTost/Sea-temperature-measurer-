@@ -23,6 +23,7 @@ OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
 
 void send_to_discord(float temp) {
+	WiFi.mode(WIFI_STA);
 	WiFi.begin(ssid, password);
 	
 	Serial.print("Connecting to WiFi");
@@ -51,8 +52,6 @@ void send_to_discord(float temp) {
 
 void setup() {
 	Serial.begin(115200);
-	WiFi.mode(WIFI_OFF);
-
 	sensors.begin();
 	sensors.requestTemperatures();
 	float temp = sensors.getTempCByIndex(0);
@@ -69,7 +68,7 @@ void setup() {
 	Serial.print("Sleeping for ");
 	Serial.print(SLEEP_SECONDS);
 	Serial.println("s...");
-	
+
 	ESP.deepSleep(SLEEP_SECONDS * 1000000UL);
 }
 
